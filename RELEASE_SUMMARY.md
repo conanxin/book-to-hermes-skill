@@ -1,71 +1,91 @@
 # Release Summary
 
-## book-to-hermes-skill v0.1.0-local
+## Project: book-to-hermes-skill
 
-### Development Phases Completed
+**Repository**: https://github.com/conanxin/book-to-hermes-skill
+**Visibility**: PRIVATE
+**Last Updated**: 2026-05-31
 
-| Phase | Focus | Status |
-|-------|-------|--------|
-| 0-a | Skeleton + text extraction | PASS |
-| 0-b | Markdown/TXT smoke test | PASS |
-| 0-c | PDF support + validate | PASS |
-| 0-d | Real HTML test (lofi-engine) | PASS |
-| 0-e | DOCX/EPUB support | PASS |
-| 0-f | Glossary/Topic refinement | PASS |
-| 0-g | Format expansion precheck | PASS |
-| 1-a | First daily use (art-as-end-in-itself) | PASS |
-| 1-b | English glossary + title fix + manifest | PASS |
-| 1-c | GitHub-ready export | PASS |
+## What This Is
 
-### Current Functionality
+A local-first tool to convert documents (Markdown, TXT, PDF, HTML, DOCX, EPUB) into Hermes-native skills. No network, no LLM calls, no external dependencies beyond Python stdlib + venv packages.
 
-- Extract text from 6 formats: Markdown, TXT, PDF, HTML, DOCX, EPUB
-- Generate Hermes-native skills with:
-  - Progressive disclosure (SKILL.md + chapter files)
-  - Extractive summaries (no LLM, no synthetic content)
-  - Glossary with term extraction (Chinese + English academic concepts)
-  - Topic index
-  - Patterns & techniques
-  - Cheatsheet
-  - Source manifest with safety notes
-- Validate generated skills for structure and safety
-- HTML title extraction with filename-like title filtering
-- Table normalization (Markdown tables → field: value format)
-- Chinese term quality filtering
-- English academic concept extraction (Title Case, hyphenated, frequent concepts)
+## Phase 0: Core Tool Development (Complete)
 
-### Supported Formats
+| Phase | Status | Description |
+|-------|--------|-------------|
+| 0-a | PASS | Markdown smoke test |
+| 0-b | PASS | Markdown real test |
+| 0-c | PASS | TXT test |
+| 0-d | PASS | Real report test (19 chapters) |
+| 0-e | PASS | Term extraction refinement |
+| 0-f | PASS | Glossary / topic refinement |
+| 0-g | PASS | Format expansion precheck |
+| 0-h | PASS | HTML / DOCX smoke tests |
+| 0-i | PASS | EPUB smoke test |
+| 0-j | PASS | Complex EPUB stress test |
 
-- Markdown (.md, .markdown)
+## Phase 1: The Artist Is Dead Bilingual Skill Pair (Complete)
+
+| Phase | Status | Description |
+|-------|--------|-------------|
+| 1-a | PASS | English skill generation (8 chapters) |
+| 1-b | PASS | Chinese skill generation (7 chapters) |
+| 1-c | PASS | Bilingual skill pair report |
+| 1-d | PASS | Private GitHub repo created and pushed |
+| 1-e | PASS | Quality acceptance criteria |
+| 1-f | PASS | Daily use workflow |
+| 1-g | PASS | Bilingual glossary v1 (40 high, 18 medium, 20 low, 16 missing) |
+| 1-h | PARTIAL | Source diagnostics — content complete, structure incomplete |
+| 1-i | PASS | Source patched, skill rebuilt (8 chapters) |
+| 1-j | PASS | Bilingual glossary v2 (47 high, +7 upgraded) |
+| 1-k | PASS | Review packet (12 terms flagged) |
+| 1-l | PASS | User decisions + v3 (3 accepted, 1 revised, 2 rejected, 6 do_not_write_back) |
+| 1-m | PASS | 4 terms written back to both skill glossaries |
+| 1-n | PASS | Bilingual glossary workflow templates documented |
+| 1-o | PASS | Private GitHub export refreshed |
+
+## Bilingual Glossary Evolution
+
+| Version | High | Medium | Low | Missing | Total |
+|---------|------|--------|-----|---------|-------|
+| v1 (1-g) | 40 | 18 | 20 | 16 | 94 |
+| v2 (1-j) | 47 | 24 | 14 | 14 | 99 |
+| v3 (1-l) | 50 | 25 | 14 | 14 | 103 |
+
+## Key Artifacts
+
+- **English skill**: `~/.hermes/skills/books/the-artist-is-dead-en/`
+- **Chinese skill**: `~/.hermes/skills/books/the-artist-is-dead-zh/`
+- **Bilingual glossary**: `THE_ARTIST_IS_DEAD_BILINGUAL_GLOSSARY.md`
+- **Review packet**: `THE_ARTIST_IS_DEAD_BILINGUAL_GLOSSARY_REVIEW_PACKET.md`
+- **User decisions**: `THE_ARTIST_IS_DEAD_BILINGUAL_GLOSSARY_USER_DECISIONS.md`
+
+## Workflow Templates (New in Phase 1-n)
+
+- `references/bilingual_glossary_workflow.md` — Complete workflow documentation
+- `templates/bilingual_glossary_review_packet_template.md` — Review packet template
+- `templates/bilingual_glossary_writeback_template.md` — Safe write-back template
+
+## Supported Formats
+
+- Markdown (.md)
 - Plain text (.txt)
-- Text PDF (.pdf)
-- HTML (.html, .htm)
-- DOCX (.docx)
-- EPUB (.epub)
+- PDF (text-based)
+- HTML
+- DOCX
+- EPUB
 
-### Known Limitations
+## Safety Boundaries
 
-- No OCR PDF support
-- No DRM EPUB support
-- No RTF support
-- No MOBI/AZW/AZW3 support
-- No LLM enrichment (extractive only)
-- Glossary definitions are extractive, may need manual refinement
-- Patterns are template-heavy with extractive evidence
+- No network requests in scripts
+- No LLM API calls in scripts
+- No pip/apt install in scripts
+- No secret storage in repo
+- No source documents in repo
+- No generated skills in repo
 
-### Recommended Next Steps
+## License
 
-1. **Daily use**: Continue generating book skills from your reading
-2. **Manual enrichment**: Refine glossary definitions for important skills
-3. **LLM enrichment design**: Design post-processing pipeline for glossary/patterns refinement
-4. **RTF/MOBI support**: Add if needed (lower priority)
-5. **Public release**: Choose license and publish (optional)
-
-### Safety Guarantees
-
-- No auto-install of dependencies
-- No network requests during generation
-- No LLM API calls during generation
-- No script execution (HTML/EPUB)
-- No macro execution (DOCX)
-- Extractive summaries only
+Pending. See LICENSE_PENDING.md.
+Not ready for public release without license selection.

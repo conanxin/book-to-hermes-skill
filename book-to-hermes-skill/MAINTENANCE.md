@@ -137,6 +137,88 @@ cp -r ~/.hermes/skills/knowledge/book-to-hermes-skill.backup-<timestamp> \
 - Mixing system Python with venv packages
 - Defaulting `--allow-overwrite` to `yes`
 
+## Bilingual Glossary Review and Write-Back
+
+### When to Use
+
+- Same article/book exists in both English and Chinese
+- Terminology alignment is needed
+- Translation quality requires human review
+- Cross-referencing between language versions
+
+### Workflow
+
+1. **Generate bilingual glossary v1** (Phase 1-g)
+   - Extract terms from both skills
+   - Classify confidence: high / medium / low / missing
+   - Document chapter gaps
+
+2. **Fix source if chapter gap** (Phase 1-h / 1-i)
+   - Search for complete source
+   - Create patched copy if needed
+   - Rebuild skill and re-evaluate
+
+3. **Generate bilingual glossary v2** (Phase 1-j)
+   - Re-evaluate after any rebuild
+   - Update statistics
+
+4. **Generate review packet** (Phase 1-k)
+   - Flag low-confidence terms
+   - Present evidence and recommendations
+   - User makes decisions
+
+5. **Apply decisions and v3** (Phase 1-l)
+   - Log user decisions
+   - Update glossary with accepted/revised terms
+
+6. **Safe write-back** (Phase 1-m)
+   - Backup both skills
+   - Append to glossary.md only
+   - Validate after write-back
+
+### Input
+
+- English skill path
+- Chinese skill path
+- English glossary
+- Chinese glossary
+- chapters/
+
+### Output
+
+- Bilingual glossary (v1/v2/v3)
+- Diff summary
+- Review packet
+- User decision log
+- Write-back report
+
+### Must Confirm Before Write-Back
+
+- User has reviewed all flagged terms
+- Accepted terms list is finalized
+- Rejected terms will not be written back
+- Both skills are backed up
+
+### Write-Back Rules
+
+- Only modify glossary.md
+- Do not modify SKILL.md, chapters/, metadata.json
+- Append user-reviewed section, do not overwrite original glossary
+- Always validate after write-back
+- Do not write back unreviewed terms
+
+### Related Files
+
+- Workflow: `references/bilingual_glossary_workflow.md`
+- Review packet template: `templates/bilingual_glossary_review_packet_template.md`
+- Write-back template: `templates/bilingual_glossary_writeback_template.md`
+
+### Not Recommended for Automation
+
+- User review decisions require human judgment
+- Translation quality cannot be fully automated
+- Source-specific context matters
+
 ## Health Checks
 
 ```bash

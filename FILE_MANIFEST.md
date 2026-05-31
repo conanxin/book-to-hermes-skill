@@ -1,44 +1,75 @@
 # File Manifest
 
-| Path | Size | Purpose | Safe to Publish |
-|------|------|---------|-----------------|
-| book-to-hermes-skill/EXAMPLES.md | 3343 | Usage examples | Yes |
-| book-to-hermes-skill/MAINTENANCE.md | 4506 | Maintenance guide | Yes |
-| book-to-hermes-skill/PHASE_INDEX.md | 4424 | Phase development index | Yes |
-| book-to-hermes-skill/QUICKSTART.md | 4234 | Quick start guide | Yes |
-| book-to-hermes-skill/README.md | 3192 | Tool documentation | Yes |
-| book-to-hermes-skill/RELEASE_NOTES.md | 1596 | Release history | Yes |
-| book-to-hermes-skill/SECURITY.md | 2462 | Security policy | Yes |
-| book-to-hermes-skill/SKILL.md | 23609 | Hermes skill manifest | Yes |
-| book-to-hermes-skill/TEST_MATRIX.md | 2879 | Test coverage matrix | Yes |
-| book-to-hermes-skill/build_book_skill.py | 82100 | Tool file | Yes |
-| book-to-hermes-skill/examples/sample_command.md | 578 | Example usage | Yes |
-| book-to-hermes-skill/extract_text.py | 25937 | Tool file | Yes |
-| book-to-hermes-skill/references/chinese_term_extraction.md | 6678 | Design reference document | Yes |
-| book-to-hermes-skill/references/daily_use_patterns.md | 5097 | Design reference document | Yes |
-| book-to-hermes-skill/references/english_term_extraction.md | 3716 | Design reference document | Yes |
-| book-to-hermes-skill/references/epub_extractor.md | 8358 | Design reference document | Yes |
-| book-to-hermes-skill/references/extractive_summary_rules.md | 2592 | Design reference document | Yes |
-| book-to-hermes-skill/references/format_detection_pitfalls.md | 2384 | Design reference document | Yes |
-| book-to-hermes-skill/references/format_expansion_precheck.md | 3914 | Design reference document | Yes |
-| book-to-hermes-skill/references/html_docx_extractor.md | 5675 | Design reference document | Yes |
-| book-to-hermes-skill/references/html_title_extraction.md | 1902 | Design reference document | Yes |
-| book-to-hermes-skill/references/output_schema.md | 1779 | Design reference document | Yes |
-| book-to-hermes-skill/references/phase_based_development.md | 3336 | Design reference document | Yes |
-| book-to-hermes-skill/references/pitfalls.md | 10521 | Design reference document | Yes |
-| book-to-hermes-skill/references/release_freeze_pattern.md | 2317 | Design reference document | Yes |
-| book-to-hermes-skill/references/safety_policy.md | 1420 | Design reference document | Yes |
-| book-to-hermes-skill/references/supported_formats.md | 1561 | Design reference document | Yes |
-| book-to-hermes-skill/references/table_normalization.md | 2179 | Design reference document | Yes |
-| book-to-hermes-skill/references/validate_layered_safety.md | 3050 | Design reference document | Yes |
-| book-to-hermes-skill/scripts/build_book_skill.py | 82100 | Skill generation script | Yes |
-| book-to-hermes-skill/scripts/extract_text.py | 25937 | Text extraction script | Yes |
-| book-to-hermes-skill/scripts/validate_book_skill.py | 5398 | Validation script | Yes |
-| book-to-hermes-skill/templates/chapter.md | 385 | Skill generation template | Yes |
-| book-to-hermes-skill/templates/cheatsheet.md | 155 | Skill generation template | Yes |
-| book-to-hermes-skill/templates/generated_SKILL.md | 1831 | Skill generation template | Yes |
-| book-to-hermes-skill/templates/glossary.md | 66 | Skill generation template | Yes |
-| book-to-hermes-skill/templates/patterns.md | 168 | Skill generation template | Yes |
-| book-to-hermes-skill/validate_book_skill.py | 5398 | Tool file | Yes |
-| README_EXPORT.md | 2797 | Export metadata | Yes |
-| FILE_MANIFEST.md | 3518 | Export metadata | Yes |
+## book-to-hermes-skill/ (Tool Directory)
+
+### Core Documentation
+- SKILL.md — Main skill definition and workflow
+- README.md — Project overview
+- QUICKSTART.md — Copy-paste examples
+- EXAMPLES.md — Naming conventions and modes
+- SECURITY.md — Safety boundaries
+- MAINTENANCE.md — Maintenance guide including bilingual glossary workflow
+- TEST_MATRIX.md — Test results (Phase 0 + Phase 1)
+- RELEASE_NOTES.md — Changelog
+- PHASE_INDEX.md — Phase history
+
+### Scripts
+- scripts/extract_text.py — Text extraction from documents
+- scripts/build_book_skill.py — Skill generation
+- scripts/validate_book_skill.py — Validation
+
+### Templates
+- templates/chapter.md — Chapter file template
+- templates/cheatsheet.md — Cheatsheet template
+- templates/glossary.md — Glossary template
+- templates/patterns.md — Patterns template
+- templates/generated_SKILL.md — SKILL.md generation template
+- templates/bilingual_glossary_review_packet_template.md — Review packet template (Phase 1-n)
+- templates/bilingual_glossary_writeback_template.md — Write-back template (Phase 1-n)
+
+### References
+- references/supported_formats.md — Format support matrix
+- references/output_schema.md — Output structure
+- references/safety_policy.md — Safety rules
+- references/pitfalls.md — Known bugs and fixes
+- references/english_term_extraction.md — English term extraction rules
+- references/chinese_term_extraction.md — Chinese term extraction rules
+- references/extractive_summary_rules.md — Summary generation rules
+- references/table_normalization.md — Table normalization rules
+- references/html_title_extraction.md — HTML title extraction
+- references/format_detection_pitfalls.md — Format detection pitfalls
+- references/format_expansion_precheck.md — Format expansion precheck (Phase 0-g)
+- references/phase_based_development.md — Phase-based development guide
+- references/release_freeze_pattern.md — Release freeze pattern
+- references/bilingual_skill_pair.md — Bilingual skill pair pattern (Phase 1-c)
+- references/bilingual_glossary_alignment.md — Bilingual glossary alignment (Phase 1-g)
+- references/bilingual_glossary_user_review.md — User review documentation (Phase 1-k)
+- references/bilingual_glossary_workflow.md — Complete bilingual workflow (Phase 1-n)
+- references/github_ready_export.md — GitHub export guide (Phase 1-c)
+- references/private_github_push.md — Private GitHub push guide (Phase 1-d)
+- references/daily_use_workflow.md — Daily use workflow (Phase 1-f)
+- references/source_structure_diagnostics.md — Source structure diagnostics (Phase 1-h)
+- references/source_structure_repair.md — Source structure repair (Phase 1-i)
+
+### Examples
+- examples/sample_command.md — Sample command reference
+
+## Export-Level Files
+
+- README_EXPORT.md — Export README
+- FILE_MANIFEST.md — This file
+- RELEASE_SUMMARY.md — Release summary
+- PUBLISHING_CHECKLIST.md — Publishing checklist
+- LICENSE_PENDING.md — License placeholder
+- .gitignore — Git ignore rules
+
+## Exclusions
+
+The following are NOT included in this export:
+- Source documents (PDF, EPUB, DOCX, HTML originals)
+- Generated book skills (stored in ~/.hermes/skills/books/)
+- Backup directories
+- Cache files (__pycache__, .pytest_cache)
+- Environment files (.env)
+- Log files
+- Secret / credential files

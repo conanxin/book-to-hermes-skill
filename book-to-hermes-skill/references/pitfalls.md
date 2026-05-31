@@ -153,6 +153,40 @@ grep -c "appears in source" ~/.hermes/skills/books/test-zh/glossary.md
 
 **Fix**: `slugify()` preserves Chinese characters by converting them to pinyin or keeping them as-is. Current implementation keeps Chinese characters in filenames (e.g., `ch02-第一章项目概述.md`).
 
+## Source Structure
+
+### PDF-to-HTML Conversion Loses Heading Structure (Phase 1-h, 2026-05-31)
+
+**Symptom**: Chinese skill has 7 chapters while English skill has 8. Chapter 1.3 ("The Cost of One-Dimensionality: The Disappearance of the Relational Layer") appears to be "missing" from the Chinese version.
+
+**Root Cause**: The Chinese source HTML was converted from PDF. During conversion, the `<h2>` heading for 1.3 was lost and replaced with a `<li>` list item inside the preceding 1.2 section:
+
+```html
+<!-- English source (correct) -->
+<h2>1.3 3. The Cost of One-Dimensionality...</h2>
+
+<!-- Chinese source (broken) -->
+<li><p>1.3 三、单向度的代价：关系层的消失 ...</p></li>
+```
+
+The chapter splitter splits on `<h2>` elements only, so the 1.3 content is absorbed into the 1.2 chapter.
+
+**Content check**: The 1.3 content IS present in the Chinese source HTML (salons, patronage, master-apprentice, impressionist, cubist, surrealist, gallery, café, tea ceremony all appear). It is simply not extracted as a separate chapter.
+
+**Fix Options** (in order of preference):
+1. **Manual source fix** (fastest): Edit the source HTML to wrap the 1.3 content in `<h2>1.3 ...</h2>` instead of `<li>`, then regenerate the skill.
+2. **Enhanced splitter**: Modify `split_into_chapters()` to recognize `<li>` elements containing chapter-like markers (e.g., `<li>1.3 三、...`) as chapter boundaries. Risk: false positives from regular list items.
+3. **Full-text extraction**: Change the skill to include full text instead of extractive summaries. This preserves all content regardless of chapter boundaries, but increases skill size significantly.
+
+**Diagnostic checklist for "missing chapter" reports**:
+1. Check source HTML h2 headings: `grep -n "<h2" source.html`
+2. Check if "missing" content exists in source: `grep -n "keyword" source.html`
+3. Check if content is embedded in another chapter: `grep -n "keyword" source.html | head -5`
+4. Check source structure around suspected gap: `sed -n 'start,endp' source.html | grep "<h2\|<li\|<p"`
+5. If content exists but not as h2 → source structure issue, not missing content
+
+**Lesson**: "Missing chapter" does not always mean "missing content". Always verify the source HTML structure before concluding content is absent. PDF-to-HTML conversion is a common source of heading structure loss.
+
 ## Validation
 
 ### False Positive Secret Detection

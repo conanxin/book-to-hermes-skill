@@ -1,46 +1,51 @@
 # Publishing Checklist
 
-## Pre-Publish Verification
-
-- [x] **No secrets**: Scanned for API keys, tokens, credentials, passwords
-- [x] **No source documents**: No PDFs, EPUBs, DOCXs, or HTML source files included
-- [x] **No private generated skills**: No personal book skills included
-- [x] **No API keys**: No OpenAI, Anthropic, or other service keys
-- [x] **No logs**: No log files or debug output
-- [x] **No large binaries**: All files are text/source code
-- [x] **Security scan passed**: No suspicious patterns found
-- [x] **Functionality verified**: All core files present
-
-## License Status
-
-- [ ] **License selected**: See LICENSE_PENDING.md
-- [ ] **License file added**: To be done before public release
-
-## Repository Settings (To Be Decided)
-
-- [ ] **Repository name**: To be confirmed by user
-- [ ] **Visibility**: Private or Public — to be confirmed by user
-- [ ] **README**: Already present
-- [ ] **.gitignore**: Already present
-
-## Push Decision
-
-- [ ] **Push to GitHub**: Not yet decided
-- [ ] **Remote added**: Not yet
-- [ ] **Initial commit**: Done locally (if git init succeeded)
-
-## Notes
-
-This export is **safe for private GitHub repository**.
-
-For **public repository**, user must:
-1. Select a license (MIT / Apache-2.0 / GPL-compatible recommended)
-2. Confirm no personal information in references/examples
-3. Decide if examples should be included
-
 ## Current Status
 
-✓ Ready for private backup
-✓ Ready for private GitHub repo
-○ Needs license for public repo
-○ Needs user confirmation before push
+- [x] Private GitHub repo created: https://github.com/conanxin/book-to-hermes-skill
+- [x] Local export prepared
+- [x] .gitignore configured
+- [x] FILE_MANIFEST.md updated
+- [x] RELEASE_SUMMARY.md updated
+- [x] Bilingual glossary workflow templates added
+- [ ] License selected and added
+- [ ] Public release reviewed
+
+## Private Repo (Current)
+
+- [x] Repo is PRIVATE
+- [x] No secrets in repo
+- [x] No source documents in repo
+- [x] No generated skills in repo
+- [x] No .env or config files in repo
+- [x] Scripts have no network/LLM calls
+- [x] All tests pass
+
+## Before Public Release
+
+- [ ] Select license (MIT / GPL / Apache / etc.)
+- [ ] Add LICENSE file
+- [ ] Review SECURITY.md for public audience
+- [ ] Review README.md for public audience
+- [ ] Remove any personal references if needed
+- [ ] Add CONTRIBUTING.md if accepting PRs
+- [ ] Review all references/ for sensitive content
+- [ ] Consider adding CI/CD (GitHub Actions)
+- [ ] Tag initial release (v0.1.0)
+
+## Not For Public Release
+
+- Source documents (PDF, EPUB, DOCX, HTML originals)
+- Generated book skills (contain extracted content)
+- Personal workspace paths
+- API keys or credentials
+- Hermes config files
+
+## Bilingual Glossary Workflow (Phase 1-n)
+
+- [x] Workflow documented
+- [x] Review packet template created
+- [x] Write-back template created
+- [x] MAINTENANCE.md updated
+- [x] TEST_MATRIX.md updated
+- [ ] Future: Consider automating glossary extraction (not write-back)

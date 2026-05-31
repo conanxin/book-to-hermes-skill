@@ -30,7 +30,27 @@ Transform written knowledge into actionable Hermes skills by extracting structur
 | 0-j | PASS | Real EPUB test: complex stress test with 8 chapters, extractor refactored to avoid nested-content double-processing, table/list/blockquote extraction fixed, validate PASS |
 | 0-k | PASS | Release freeze: format support frozen, documentation finalized, regression validation complete |
 | 1-a | PASS | First real daily-use test: 46-chapter English academic paper (art_history.html), validate PASS, glossary empty for English docs |
-| 1-b | PASS | English glossary extraction enhancement + HTML title fix + source_manifest update. 40 terms extracted (was 0). ch01 title fixed from `art_history.pdf` to full paper title. |
+| 1-c | PASS | GitHub-ready export: clean directory, security scan, manifest generation, local git init, publishing checklist |
+
+### Phase 1-d Techniques (2026-05-31)
+
+**Private GitHub repo creation from local export**: One-step workflow using `gh repo create --private --source . --remote origin --push`. Pre-flight: verify `gh auth status`, verify working tree clean, verify no existing remotes. Post-push: verify `visibility: PRIVATE` via `gh repo view --json visibility`. Never create public repo unless user explicitly requests. Never output token/credential.
+
+**Branch naming for push**: Local export may be on `master` branch (git default). Before push, rename to `main` with `git branch -M main` if desired, or keep `master` and push as-is. GitHub will use the pushed branch name as default.
+
+**Export + push combined workflow**: (1) create clean export directory with timestamped backup of existing, (2) selectively copy tool本体, (3) create export-level metadata files, (4) run security scan, (5) local git init + commit, (6) `gh repo create --private --source . --push`, (7) verify visibility and remote.
+
+### Phase 1-c Techniques (2026-05-31)
+
+**GitHub-ready export workflow**: Structured pattern for creating a clean, scannable, git-initialized local export. Steps: (1) create clean export directory with timestamped backup of existing, (2) selectively copy tool本体 (SKILL.md, scripts, templates, references, examples), (3) exclude backups/venvs/secrets/generated skills/source docs/logs, (4) create export-level metadata files (README_EXPORT, FILE_MANIFEST, RELEASE_SUMMARY, PUBLISHING_CHECKLIST, LICENSE_PENDING, .gitignore), (5) run security scan for secrets/env files/source docs/large files, (6) optional local git init with no remote, (7) functionality completeness check.
+
+**Export exclusion rules**: Never copy `.backup*`, `__pycache__/`, `.venv/`, `.env`, generated skills from `~/.hermes/skills/books/`, original source documents (PDF/EPUB/DOCX/HTML), logs, memories, cron, Telegram/OAuth content.
+
+**Security scan checklist**: grep for secret patterns (API key, token, secret, credential, password, oauth, bearer, OPENAI, ANTHROPIC, OLLAMA, LITELLM), check for `.env` files, check for config files, check for source documents, check for logs, check for files >1MB, check for backup/cache directories, check for high-entropy strings. Document all results. False positives (words like "secret" in documentation) are expected — verify context.
+
+**Publishing decision matrix**: Private repo requires no license. Public repo requires LICENSE file selection (MIT/Apache-2.0/GPL). Personal examples may contain PII — review before public release. Source document excerpts may be copyrighted — remove before public release.
+
+**Local git constraints**: Only `git init`, `git add .`, `git commit`. Never `git remote add`, never `git push`. If git user not configured, use `git config --local` (not global) or document failure reason.
 
 ### Phase 1-b Techniques (2026-05-31)
 
@@ -45,6 +65,67 @@ Transform written knowledge into actionable Hermes skills by extracting structur
 **source_manifest template update**: Updated to list all 6 supported formats (Markdown, TXT, text PDF, HTML, DOCX, EPUB) and 4 unsupported formats (OCR PDF, DRM EPUB, RTF, MOBI/AZW/AZW3). Added safety notes section documenting no script execution, no macro execution, no network, no LLM.
 
 **EPUB import bug fix**: `_extract_epub_with_ebooklib()` was missing `import ebooklib` at module level, causing `NameError: name 'ebooklib' is not defined` when checking `item.get_type() == ebooklib.ITEM_DOCUMENT`. Fix: add `import ebooklib` before `from ebooklib import epub`.
+
+### Phase 1-j Techniques (2026-05-31)
+
+**Bilingual glossary regeneration after source repair**: When a source structure repair (Phase 1-i) adds missing chapters, the bilingual glossary must be regenerated to reflect new alignments. Workflow: (1) backup v1 glossary, (2) re-run term searches against regenerated skill, (3) upgrade terms from "missing" to "high/medium" if now found in chapters, (4) update statistics table, (5) create diff summary documenting changes, (6) write v2 glossary with version annotation.
+
+**Glossary version management**: Maintain both a versioned file (`BILINGUAL_GLOSSARY_V2.md`) and a main file (`BILINGUAL_GLOSSARY.md`) that always points to the latest version. Backup old versions with timestamp. Include "Version: v2 after Phase X repair" in the Summary section.
+
+**Diff summary pattern**: Create a separate `BILINGUAL_GLOSSARY_V2_DIFF_SUMMARY.md` that documents: v1 vs v2 statistics, upgraded terms list with before/after status, still-missing terms with reason, chapter alignment status table, recommendations for next steps. This lets users review changes without reading the full glossary.
+
+**Post-repair term verification**: After source structure repair, verify upgraded terms with explicit grep commands against the new skill chapters. Do not rely on memory of previous searches — the skill files have changed. Document each verification result in the Phase report.
+
+### Phase 1-i Techniques (2026-05-31)
+
+**Source structure repair for missing chapters**: When a chapter appears missing from a generated skill but the source HTML contains the content, diagnose heading structure before regenerating. Common cause: PDF-to-HTML conversion embeds chapter markers in `<li>` elements instead of `<h2>` headings.
+
+**Diagnostic checklist**: (1) `grep -n "1.3\|key_term" source.html` — confirm content exists, (2) `grep -n "<li>.*1\.3" source.html` — check for `<li>` embedding, (3) `ls chapters/ | grep "1.3"` — confirm missing from skill, (4) compare with other language skill.
+
+**Case-based repair**: Classify the `<li>` structure before fixing:
+- Case A: `<li>1.3 Title only</li>` → replace with `<h2>1.3 Title</h2>`
+- Case B: `<li><p>1.3 Title + body</p></li>` → split into `<h2></h2>` + `<p></p>`
+- Case C: Complex nested → manual edit or abort with PARTIAL
+
+**Patched copy workflow**: Never modify original source. Create `source.html.phase1i_patched.html`, apply sed fix, verify with grep, regenerate skill from patched copy. Original remains untouched for audit trail.
+
+**Duplicate chapter cleanup**: Adding a new chapter shifts numbering and may create duplicate filenames (e.g., `ch04-14` and `ch05-14` both for section 1.4). After regeneration, remove duplicates keeping only the file referenced in SKILL.md chapter index. Run validate after cleanup.
+
+**Impact on bilingual glossary**: After repair, re-run term searches, upgrade confidence levels, regenerate glossary v2, document the repair in "Chapter Gap Impact" section.
+
+### Phase 1-f Techniques (2026-05-31)
+
+**Bilingual skill pair generation**: When the same document exists in multiple languages, generate separate skills for each and create a bilingual pair documentation file. Workflow: (1) generate first language skill (e.g., English), (2) generate second language skill (e.g., Chinese), (3) compare chapter structures and note differences, (4) create `THE_ARTIST_IS_DEAD_BILINGUAL_SKILL_PAIR.md` with: both skill paths, chapter alignment table, terminology cross-reference, recommended Hermes usage patterns (load individually, compare, extract bilingual terms, generate summaries). Key finding: source-level differences (e.g., missing chapter 1.3 in Chinese) are expected and should be documented, not treated as generation errors.
+
+**Bilingual Hermes usage patterns**:
+- Load individually: `@the-artist-is-dead-en` or `@the-artist-is-dead-zh`
+- Compare structures: `@the-artist-is-dead-en @the-artist-is-dead-zh` — "Which chapter is missing in the Chinese version?"
+- Extract terminology: "What are the Chinese equivalents of Zombie Formalism, Debt Aesthetics, Duty Free Art?"
+- Generate summaries: "Summarize the main argument in 3 bullet points" (loads relevant chapter)
+- Check translation fidelity: "Compare chapter 5 summaries in both versions"
+
+**Glossary false positive tolerance**: English academic papers produce ~40 glossary terms, some of which are Title Case false positives (e.g., "Killer Han Qin", "End Applied Series This"). These do not block PASS status. The skill is still usable because real terms (Walter Robinson, Chris Wiley, Hito Steyerl, David Datuna) are present. Future enhancement: stricter Title Case context filtering. Current workaround: manual cleanup if precision matters.
+
+### Phase 1-e Techniques (2026-05-31)
+
+**Daily-use workflow solidification**: Complete end-to-end workflow for converting real documents to skills. Steps: (1) search limited dirs (`~/.hermes/workspace/`, `~/Downloads/`, `~/Documents/`) for candidate documents, (2) filter: >10KB, structured (headings/chapters), not test/smoke/secret files, (3) evaluate top 5 candidates on: format, size, topic, structure, privacy risk, (4) select best candidate, (5) run `build_book_skill.py` with explicit title/language/mode/allow-overwrite no, (6) if target exists, auto-append `-v2` instead of overwriting, (7) run `validate_book_skill.py`, (8) quality check: SKILL.md size, glossary quality, chapter titles, Topic Index, placeholders, table syntax, (9) decide: keep as formal skill or discard, (10) document in Phase report with candidate list, selection rationale, validate result, quality sampling.
+
+**Candidate evaluation criteria**: 
+- Structure: clear headings/chapters, not raw transcript
+- Content: substantive, not test/smoke/phase output
+- Size: >10KB, not overwhelming
+- Privacy: low risk (published content preferred)
+- Recency: recently studied/relevant
+- Format: HTML/Markdown/PDF/EPUB preferred over DOCX/TXT
+
+**Quality acceptance criteria**:
+- Validate: 0 errors, warnings explained
+- SKILL.md: <15K chars
+- Glossary: no obvious fragments, real terms present
+- Topic Index: no status words (成功/无/是/否/PASS/FAIL)
+- Key Points: no raw Markdown table syntax
+- Placeholders: none (TODO/PLACEHOLDER/TBD)
+- Progressive disclosure: chapter index present, individual chapters loadable
 
 ### Phase 1-a Techniques (2026-05-31)
 
@@ -308,8 +389,9 @@ hermes skill load books/ddia --list-chapters
 - `references/output_schema.md` — output directory structure and file specifications
 - `references/supported_formats.md` — format support matrix and dependency install commands
 - `references/safety_policy.md` — prohibited operations and input/output validation rules
-- `references/pitfalls.md` — session-tested bugs, fixes, and verification steps
-- `references/extractive_summary_rules.md` — offline summary generation without LLM (Phase 0-c)
+- `references/daily_use_workflow.md` — complete end-to-end workflow: find candidates, evaluate, generate, validate, quality check, use in Hermes, periodic maintenance (Phase 1-e)
+- `references/daily_use_patterns.md` — session-tested bugs, fixes, and verification steps
+- `references/phase_based_development.md` — offline summary generation without LLM (Phase 0-c)
 - `references/chinese_term_extraction.md` — Chinese term filtering and mixed-language detection (Phase 0-d)
 - `references/table_normalization.md` — Markdown table → readable bullet conversion (Phase 0-e)
 - `references/validate_layered_safety.md` — Tool-safety vs content-notice validation split (Phase 0-e)
@@ -317,7 +399,14 @@ hermes skill load books/ddia --list-chapters
 - `references/format_detection_pitfalls.md` — format detection bugs and dependency chain gaps (Phase 0-i)
 - `references/format_expansion_precheck.md` — Dependency audit and format support evaluation (Phase 0-g)
 - `references/release_freeze_pattern.md` — Release freeze documentation suite structure and regression checklist (Phase 0-k)
-- `references/daily_use_patterns.md` — Daily-use workflow, known limitations, and post-generation manual steps (Phase 1-a)
+- `references/github_ready_export.md` — Structured export workflow for GitHub backup/release: directory layout, exclusion rules, security scan commands, publishing checklist, license guidance (Phase 1-c)
+- `references/private_github_push.md` — Private repo creation from local export: gh one-liner, pre-flight checks, post-push verification, security constraints (Phase 1-d)
+- `references/source_structure_diagnostics.md` — Case study: diagnosing "missing chapter" reports when PDF-to-HTML conversion loses heading structure; diagnostic checklist and resolution options (Phase 1-h)
+- `references/source_structure_repair.md` — Step-by-step repair procedure for converting `<li>`-embedded chapter markers to proper `<h2>` headings; includes Case A/B/C classification, sed commands, verification checklist, and duplicate cleanup (Phase 1-i)
+- `references/bilingual_glossary_user_review.md` — User review workflow for low-confidence terms: review packet generation, decision patterns (accept/revise/reject/defer), write-back rules, decision logging (Phase 1-k through 1-l)
+- `references/bilingual_glossary_workflow.md` — Complete bilingual glossary workflow: applicability, inputs/outputs, 6-phase flow (v1 → source fix → v2 → review → v3 → write-back → template), confidence rules, write-back principles, safety boundaries (Phase 1-n)
+- `templates/bilingual_glossary_review_packet_template.md` — Review packet template with fields, issue types, risk levels, recommendations, user decision checklist, decision rules, post-review actions (Phase 1-k)
+- `templates/bilingual_glossary_writeback_template.md` — Write-back template with pre-checklist, backup requirements, allowed/forbidden modifications, section templates, validate commands, forbidden terms check, post-checklist (Phase 1-m)
 
 ## License
 
