@@ -4,7 +4,7 @@
 
 ### Core Documentation
 - SKILL.md — Main skill definition and workflow
-- README.md — Project overview
+- README.md — Project overview (public-facing)
 - QUICKSTART.md — Copy-paste examples
 - EXAMPLES.md — Naming conventions and modes
 - SECURITY.md — Safety boundaries
@@ -48,19 +48,23 @@
 - references/github_ready_export.md — GitHub export guide (Phase 1-c)
 - references/private_github_push.md — Private GitHub push guide (Phase 1-d)
 - references/daily_use_workflow.md — Daily use workflow (Phase 1-f)
+- references/daily_use_patterns.md — Daily use patterns
 - references/source_structure_diagnostics.md — Source structure diagnostics (Phase 1-h)
 - references/source_structure_repair.md — Source structure repair (Phase 1-i)
+- references/validate_layered_safety.md — Validation safety layers
 
 ### Examples
 - examples/sample_command.md — Sample command reference
 
 ## Export-Level Files
 
+- README.md — Main project README (public-facing)
+- ROADMAP.md — Future plans and roadmap
+- LICENSE — MIT License
 - README_EXPORT.md — Export README
 - FILE_MANIFEST.md — This file
 - RELEASE_SUMMARY.md — Release summary
-- PUBLISHING_CHECKLIST.md — Publishing checklist
-- LICENSE_PENDING.md — License placeholder
+- PUBLISHING_CHECKLIST.md — Publishing status
 - .gitignore — Git ignore rules
 
 ## Exclusions

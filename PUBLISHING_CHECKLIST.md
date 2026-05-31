@@ -2,50 +2,45 @@
 
 ## Current Status
 
-- [x] Private GitHub repo created: https://github.com/conanxin/book-to-hermes-skill
+- [x] Private GitHub repo created
 - [x] Local export prepared
 - [x] .gitignore configured
 - [x] FILE_MANIFEST.md updated
 - [x] RELEASE_SUMMARY.md updated
 - [x] Bilingual glossary workflow templates added
-- [ ] License selected and added
-- [ ] Public release reviewed
+- [x] Detailed README.md added
+- [x] ROADMAP.md added
+- [x] MIT License added
+- [x] Public release approved by user
+- [x] Public release safety scan passed
+- [x] Repo switched to PUBLIC
 
-## Private Repo (Current)
+## Public Repo (Current)
 
-- [x] Repo is PRIVATE
+- [x] Repo is PUBLIC
+- [x] MIT License present
 - [x] No secrets in repo
 - [x] No source documents in repo
 - [x] No generated skills in repo
 - [x] No .env or config files in repo
 - [x] Scripts have no network/LLM calls
 - [x] All tests pass
+- [x] README.md is comprehensive
+- [x] ROADMAP.md present
 
-## Before Public Release
+## Completed
 
-- [ ] Select license (MIT / GPL / Apache / etc.)
-- [ ] Add LICENSE file
-- [ ] Review SECURITY.md for public audience
-- [ ] Review README.md for public audience
-- [ ] Remove any personal references if needed
-- [ ] Add CONTRIBUTING.md if accepting PRs
-- [ ] Review all references/ for sensitive content
-- [ ] Consider adding CI/CD (GitHub Actions)
-- [ ] Tag initial release (v0.1.0)
+- [x] License selected: MIT
+- [x] LICENSE file added
+- [x] README.md reviewed for public audience
+- [x] Security model documented
+- [x] Known limitations documented
+- [x] Examples provided
 
-## Not For Public Release
+## Not For Public Release (Excluded)
 
 - Source documents (PDF, EPUB, DOCX, HTML originals)
 - Generated book skills (contain extracted content)
 - Personal workspace paths
 - API keys or credentials
 - Hermes config files
-
-## Bilingual Glossary Workflow (Phase 1-n)
-
-- [x] Workflow documented
-- [x] Review packet template created
-- [x] Write-back template created
-- [x] MAINTENANCE.md updated
-- [x] TEST_MATRIX.md updated
-- [ ] Future: Consider automating glossary extraction (not write-back)
