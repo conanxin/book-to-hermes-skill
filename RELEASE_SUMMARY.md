@@ -26,6 +26,8 @@ A local-first tool to convert documents (Markdown, TXT, PDF, HTML, DOCX, EPUB) i
 | 1-i to 1-o | PASS | Source patch, glossary v2/v3, write-back, templates, export refresh |
 | 1-p | PASS | Final closure, SOP, skill inventory |
 | 1-q | PASS | Public release with MIT license |
+| 1-r | PASS | v0.1.0 tag and GitHub Release |
+| 1-s | PASS | Chinese README (README.zh-CN.md) added |
 
 ## Key Features
 
@@ -35,6 +37,7 @@ A local-first tool to convert documents (Markdown, TXT, PDF, HTML, DOCX, EPUB) i
 - Bilingual glossary workflow for English/Chinese pairs
 - Safe write-back with user review
 - No network, no LLM calls, no auto-installation
+- Chinese usage guide included
 
 ## License
 

@@ -4,7 +4,8 @@
 
 ### Core Documentation
 - SKILL.md — Main skill definition and workflow
-- README.md — Project overview (public-facing)
+- README.md — Project overview (public-facing, English)
+- README.zh-CN.md — Chinese usage guide
 - QUICKSTART.md — Copy-paste examples
 - EXAMPLES.md — Naming conventions and modes
 - SECURITY.md — Safety boundaries
@@ -58,7 +59,8 @@
 
 ## Export-Level Files
 
-- README.md — Main project README (public-facing)
+- README.md — Main project README (English, public-facing)
+- README.zh-CN.md — Chinese usage guide (public-facing)
 - ROADMAP.md — Future plans and roadmap
 - LICENSE — MIT License
 - README_EXPORT.md — Export README

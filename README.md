@@ -1,5 +1,7 @@
 # Book-to-Hermes Skill
 
+[中文说明](README.zh-CN.md) | English
+
 Convert local books, articles, PDFs, HTML pages, DOCX files, and EPUBs into Hermes skills with progressive disclosure.
 
 ## What It Does
